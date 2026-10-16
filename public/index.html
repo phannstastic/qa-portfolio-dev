@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Personal QA Portfolio and Test Automation Showcase. System Under Test (SUT) for REST APIs, Selenium BDD, and performance testing.">
+  <title>QA Portfolio &bull; Test Automation Showcase</title>
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Site Header & Navigation -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="#hero" class="brand-logo" aria-label="QA Portfolio Home">
+        <span class="brand-icon">QA</span>
+        <span>Portfolio</span>
+        <span class="brand-badge">SUT</span>
+      </a>
+
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu">
+        &#9776;
+      </button>
+
+      <nav>
+        <ul id="nav-links" class="nav-links">
+          <li><a href="#hero">Profile</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#experiences">Experiences</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li>
+            <a href="/swagger" target="_blank" rel="noopener noreferrer" class="nav-swagger-btn">
+              <span>OpenAPI Docs</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. Hero / Profile Section -->
+    <section id="hero" class="hero-section">
+      <div class="hero-glow-bg"></div>
+      <div class="container">
+        <div id="hero-content" class="hero-content">
+          <!-- Populated dynamically via GET /api/profile -->
+          <div class="hero-pill-badge">
+            <span class="status-dot"></span>
+            <span>Automation Testing &bull; QA Portfolio SUT</span>
+          </div>
+          <h1 class="hero-title">QA Portfolio</h1>
+          <p class="hero-subtitle">QA Engineer</p>
+          <p class="hero-bio">QA Portfolio and Test Automation Showcase.</p>
+          <div class="hero-cta-group">
+            <a href="#projects" class="btn btn-primary">Explore Projects</a>
+            <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Skills Section -->
+    <section id="skills" class="section">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-tag">Competencies</span>
+          <h2 class="section-title">Technical Skills</h2>
+          <p class="section-desc">Test automation tools, frameworks, and technologies utilized across portfolio projects.</p>
+        </header>
+
+        <div id="skills-container" class="skills-grid">
+          <!-- Populated dynamically via GET /api/skills -->
+          <div class="skeleton" style="height: 180px; border-radius: var(--radius-lg);"></div>
+          <div class="skeleton" style="height: 180px; border-radius: var(--radius-lg);"></div>
+          <div class="skeleton" style="height: 180px; border-radius: var(--radius-lg);"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Projects Section -->
+    <section id="projects" class="section">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-tag">Showcase</span>
+          <h2 class="section-title">Portfolio Projects</h2>
+          <p class="section-desc">Automated testing suites, performance benchmarks, and quality assurance frameworks.</p>
+        </header>
+
+        <!-- Search & Filter Controls -->
+        <div class="projects-controls">
+          <div class="search-input-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="project-search" class="search-input" placeholder="Search by title, description, or technology...">
+          </div>
+
+          <div class="filter-bar">
+            <button class="filter-pill active" data-category="all">All Projects</button>
+            <button class="filter-pill" data-category="API Testing">API Testing</button>
+            <button class="filter-pill" data-category="Automation Testing">Automation Testing</button>
+            <button class="filter-pill" data-category="Performance Testing">Performance Testing</button>
+          </div>
+
+          <div class="featured-toggle-wrap">
+            <label for="featured-toggle" style="cursor: pointer; display: flex; align-items: center; gap: 0.4rem;">
+              <input type="checkbox" id="featured-toggle">
+              <span>Show featured projects only</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Projects Cards Grid -->
+        <div id="projects-container" class="projects-grid">
+          <!-- Populated dynamically via GET /api/projects -->
+          <div class="skeleton" style="height: 280px; border-radius: var(--radius-lg);"></div>
+          <div class="skeleton" style="height: 280px; border-radius: var(--radius-lg);"></div>
+          <div class="skeleton" style="height: 280px; border-radius: var(--radius-lg);"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Project Detail Modal Dialog -->
+    <div id="project-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-project-title">
+      <div class="modal-dialog">
+        <button id="modal-close-btn" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+        <div id="modal-body">
+          <!-- Populated dynamically via GET /api/projects/:slug -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Experiences Section -->
+    <section id="experiences" class="section">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-tag">Career Journey</span>
+          <h2 class="section-title">Work Experiences</h2>
+          <p class="section-desc">Professional QA engineering roles, achievements, and responsibilities.</p>
+        </header>
+
+        <div id="experiences-container" class="timeline-wrap">
+          <!-- Populated dynamically via GET /api/experiences -->
+          <div class="skeleton" style="height: 120px; border-radius: var(--radius-lg); margin-bottom: 2rem;"></div>
+          <div class="skeleton" style="height: 120px; border-radius: var(--radius-lg);"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Contact Section -->
+    <section id="contact" class="section">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-tag">Get in Touch</span>
+          <h2 class="section-title">Send a Message</h2>
+          <p class="section-desc">Have a question or looking to collaborate on QA automation? Send an inquiry message below.</p>
+        </header>
+
+        <div class="contact-wrap">
+          <div class="contact-card">
+            <!-- Feedback Banner (Success / Error) -->
+            <div id="contact-feedback" class="feedback-banner" role="alert"></div>
+
+            <form id="contact-form" novalidate>
+              <div class="form-group">
+                <label for="contact-name" class="form-label">
+                  Your Full Name <span class="req">*</span>
+                </label>
+                <input type="text" id="contact-name" class="form-input" placeholder="e.g. Jane Doe" required maxlength="100">
+              </div>
+
+              <div class="form-group">
+                <label for="contact-email" class="form-label">
+                  Your Email Address <span class="req">*</span>
+                </label>
+                <input type="email" id="contact-email" class="form-input" placeholder="name@example.com" required maxlength="191">
+              </div>
+
+              <div class="form-group">
+                <label for="contact-message" class="form-label">
+                  Your Message <span class="req">*</span>
+                </label>
+                <textarea id="contact-message" class="form-textarea" placeholder="Describe your inquiry or testing requirements (10 to 500 characters)..." required minlength="10" maxlength="500"></textarea>
+                <div class="char-counter-row">
+                  <span id="char-counter">0 / 500 characters (minimum 10)</span>
+                  <span>Required</span>
+                </div>
+              </div>
+
+              <button type="submit" id="contact-submit-btn" class="btn btn-primary" style="width: 100%;">
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <nav class="footer-nav">
+        <a href="#hero">Profile</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experiences">Experiences</a>
+        <a href="#contact">Contact</a>
+        <a href="/swagger" target="_blank" rel="noopener noreferrer">Swagger API</a>
+      </nav>
+      <p>&copy; 2026 QA Portfolio CMS &bull; System Under Test (SUT) for Automated Testing Suites.</p>
+    </div>
+  </footer>
+
+  <!-- Application Script -->
+  <script src="/js/app.js"></script>
+</body>
+</html>

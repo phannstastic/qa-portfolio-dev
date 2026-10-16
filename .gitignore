@@ -8,6 +8,10 @@ bun.lock
 .env*.local
 *.pem
 *.key
+*.sql
+!drizzle/*.sql
+*.dump
+*.bak
 
 # Build & outputs
 dist/

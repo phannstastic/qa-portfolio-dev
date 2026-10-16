@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Admin CMS Dashboard for QA Portfolio">
+  <title>Admin Dashboard &bull; QA Portfolio CMS</title>
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core & Admin Stylesheets -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebar-backdrop" class="modal-backdrop" style="z-index: 35; display: none;"></div>
+
+  <!-- Admin Sidebar -->
+  <aside id="admin-sidebar" class="admin-sidebar">
+    <div class="sidebar-header">
+      <a href="/admin" class="brand-logo" aria-label="Admin Dashboard">
+        <span class="brand-icon">QA</span>
+        <span>Portfolio</span>
+        <span class="brand-badge">CMS</span>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#overview" class="sidebar-link active" data-view="overview" id="nav-overview">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <span>Overview</span>
+      </a>
+      <a href="#projects" class="sidebar-link" data-view="projects" id="nav-projects">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+        <span>Projects</span>
+      </a>
+      <a href="#experiences" class="sidebar-link" data-view="experiences" id="nav-experiences">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        <span>Experiences</span>
+      </a>
+      <a href="#contacts" class="sidebar-link" data-view="contacts" id="nav-contacts">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        <span>Messages</span>
+        <span id="sidebar-unread-badge" class="sidebar-badge" style="display: none;">0</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="/" target="_blank" rel="noopener noreferrer" class="sidebar-link" style="margin-bottom: 0.5rem;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        <span>View Live Site</span>
+      </a>
+      <button id="sidebar-logout-btn" class="sidebar-link" style="width: 100%; border: none; background: transparent; color: var(--accent-rose);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        <span>Sign Out</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Container -->
+  <div class="admin-main">
+    <!-- Topbar -->
+    <header class="admin-topbar">
+      <div class="topbar-left">
+        <button id="mobile-sidebar-toggle" class="btn-icon" aria-label="Toggle menu" style="display: none;">
+          &#9776;
+        </button>
+        <h1 id="page-title" class="topbar-title">Dashboard Overview</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="admin-user-badge">
+          <div id="user-avatar-initials" class="user-avatar-circle">A</div>
+          <div>
+            <div id="user-name" style="font-weight: 600; color: var(--text-primary);">Admin</div>
+            <div id="user-role" style="font-size: 0.75rem; text-transform: uppercase; color: var(--accent-cyan); font-weight: 700;">ADMIN</div>
+          </div>
+        </div>
+        <button id="topbar-logout-btn" class="btn btn-secondary btn-sm" aria-label="Log out">
+          Sign Out
+        </button>
+      </div>
+    </header>
+
+    <!-- Admin Content Area -->
+    <main class="admin-content-wrap">
+
+      <!-- ========================================================
+           1. Overview View
+           ======================================================== -->
+      <section id="view-overview" class="admin-view active">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Total Projects</div>
+              <div id="stat-projects-count" class="stat-value">0</div>
+            </div>
+            <div class="stat-icon cyan">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Experiences</div>
+              <div id="stat-experiences-count" class="stat-value">0</div>
+            </div>
+            <div class="stat-icon indigo">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Contact Messages</div>
+              <div id="stat-contacts-count" class="stat-value">0</div>
+            </div>
+            <div class="stat-icon emerald">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Unread Inquiries</div>
+              <div id="stat-unread-count" class="stat-value" style="color: var(--accent-rose);">0</div>
+            </div>
+            <div class="stat-icon rose">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Summary Cards -->
+        <div class="table-card">
+          <div class="table-header-row">
+            <h2 class="table-title">Recent Contact Messages</h2>
+            <button class="btn btn-secondary btn-sm" id="btn-quick-view-messages">View All Messages</button>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Sender</th>
+                  <th>Subject</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="overview-contacts-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           2. Projects Management View
+           ======================================================== -->
+      <section id="view-projects" class="admin-view">
+        <div class="table-card">
+          <div class="table-header-row">
+            <h2 class="table-title">Portfolio Projects</h2>
+            <div class="table-actions">
+              <button id="btn-create-project" class="btn btn-primary btn-sm">
+                + Add Project
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Title & Slug</th>
+                  <th>Category</th>
+                  <th>Tech Stack</th>
+                  <th>Featured</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="projects-tbody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           3. Experiences Management View
+           ======================================================== -->
+      <section id="view-experiences" class="admin-view">
+        <div class="table-card">
+          <div class="table-header-row">
+            <h2 class="table-title">Career Experiences</h2>
+            <div class="table-actions">
+              <button id="btn-create-experience" class="btn btn-primary btn-sm">
+                + Add Experience
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Company & Location</th>
+                  <th>Role</th>
+                  <th>Period</th>
+                  <th>Status</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="experiences-tbody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           4. Contact Inquiries View
+           ======================================================== -->
+      <section id="view-contacts" class="admin-view">
+        <div class="table-card">
+          <div class="table-header-row">
+            <h2 class="table-title">Contact Inquiries</h2>
+            <div class="table-actions">
+              <div class="filter-btn-group">
+                <button class="filter-btn active" data-status="">All</button>
+                <button class="filter-btn" data-status="unread">Unread</button>
+                <button class="filter-btn" data-status="read">Read</button>
+                <button class="filter-btn" data-status="archived">Archived</button>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Sender</th>
+                  <th>Email</th>
+                  <th>Subject</th>
+                  <th>Status</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="contacts-tbody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==========================================================
+       MODALS
+       ========================================================== -->
+
+  <!-- Project Form Modal (Create / Edit) -->
+  <div id="project-modal" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="project-modal-title" class="modal-title">Add Project</h3>
+        <button class="modal-close-btn" data-close-modal>&times;</button>
+      </div>
+      <form id="project-form" novalidate>
+        <input type="hidden" id="project-form-id" value="">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="project-title" class="form-label">Title <span class="req">*</span></label>
+              <input type="text" id="project-title" class="form-input" required maxlength="255" placeholder="e.g. E-Commerce Automation Framework">
+            </div>
+            <div class="form-group">
+              <label for="project-slug" class="form-label">Slug (Optional)</label>
+              <input type="text" id="project-slug" class="form-input" maxlength="191" placeholder="e.g. ecommerce-automation-framework">
+              <div class="form-help">Auto-generated from title if left blank.</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="project-category" class="form-label">Category <span class="req">*</span></label>
+              <input type="text" id="project-category" class="form-input" required maxlength="100" placeholder="e.g. Test Automation, API Testing">
+            </div>
+            <div class="form-group">
+              <label for="project-sort-order" class="form-label">Sort Order</label>
+              <input type="number" id="project-sort-order" class="form-input" value="0" min="0">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="project-tech-stack" class="form-label">Tech Stack (comma-separated) <span class="req">*</span></label>
+            <input type="text" id="project-tech-stack" class="form-input" required placeholder="e.g. Selenium, Playwright, Jest, TypeScript">
+          </div>
+
+          <div class="form-group">
+            <label for="project-description" class="form-label">Description <span class="req">*</span></label>
+            <textarea id="project-description" class="form-textarea" required placeholder="Detailed project overview, problem statement, testing methodology, and impact..."></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="project-github-url" class="form-label">GitHub Repository URL</label>
+              <input type="url" id="project-github-url" class="form-input" maxlength="255" placeholder="https://github.com/username/repo">
+            </div>
+            <div class="form-group">
+              <label for="project-live-url" class="form-label">Live Demo URL</label>
+              <input type="url" id="project-live-url" class="form-input" maxlength="255" placeholder="https://demo.example.com">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="project-image-url" class="form-label">Image URL</label>
+            <input type="url" id="project-image-url" class="form-input" maxlength="255" placeholder="https://example.com/screenshot.jpg">
+          </div>
+
+          <div class="form-group">
+            <label class="form-check">
+              <input type="checkbox" id="project-is-featured" class="form-check-input">
+              <span>Feature this project prominently on the homepage</span>
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal>Cancel</button>
+          <button type="submit" id="project-save-btn" class="btn btn-primary">Save Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Experience Form Modal (Create / Edit) -->
+  <div id="experience-modal" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="experience-modal-title" class="modal-title">Add Experience</h3>
+        <button class="modal-close-btn" data-close-modal>&times;</button>
+      </div>
+      <form id="experience-form" novalidate>
+        <input type="hidden" id="experience-form-id" value="">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="exp-company" class="form-label">Company Name <span class="req">*</span></label>
+              <input type="text" id="exp-company" class="form-input" required maxlength="150" placeholder="e.g. Acme Quality Labs">
+            </div>
+            <div class="form-group">
+              <label for="exp-role" class="form-label">Position / Role <span class="req">*</span></label>
+              <input type="text" id="exp-role" class="form-input" required maxlength="150" placeholder="e.g. QA Automation Engineer">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="exp-location" class="form-label">Location (Optional)</label>
+              <input type="text" id="exp-location" class="form-input" maxlength="150" placeholder="e.g. Jakarta, Indonesia (Remote)">
+            </div>
+            <div class="form-group">
+              <label for="exp-sort-order" class="form-label">Sort Order</label>
+              <input type="number" id="exp-sort-order" class="form-input" value="0" min="0">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="exp-start-date" class="form-label">Start Date <span class="req">*</span></label>
+              <input type="date" id="exp-start-date" class="form-input" required>
+            </div>
+            <div class="form-group" id="exp-end-date-group">
+              <label for="exp-end-date" class="form-label">End Date</label>
+              <input type="date" id="exp-end-date" class="form-input">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-check">
+              <input type="checkbox" id="exp-is-current" class="form-check-input">
+              <span>I currently work here (ongoing position)</span>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label for="exp-description" class="form-label">Responsibilities & Achievements <span class="req">*</span></label>
+            <textarea id="exp-description" class="form-textarea" required placeholder="Key responsibilities, automation achievements, test framework design, defect reduction stats..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal>Cancel</button>
+          <button type="submit" id="experience-save-btn" class="btn btn-primary">Save Experience</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Contact Message Detail Modal -->
+  <div id="contact-detail-modal" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Message Details</h3>
+        <button class="modal-close-btn" data-close-modal>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="detail-item">
+          <div class="detail-label">Sender</div>
+          <div id="detail-sender" class="detail-val"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Email</div>
+          <div id="detail-email" class="detail-val"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Subject</div>
+          <div id="detail-subject" class="detail-val"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Sent Date</div>
+          <div id="detail-date" class="detail-val"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Status</div>
+          <div id="detail-status" style="margin-top: 0.35rem;"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Message Content</div>
+          <div id="detail-message" class="detail-val"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div style="margin-right: auto; display: flex; gap: 0.5rem;" id="detail-status-actions">
+          <!-- Populated with status change buttons -->
+        </div>
+        <button type="button" class="btn btn-secondary" data-close-modal>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generic Delete Confirmation Modal -->
+  <div id="confirm-modal" class="modal-backdrop">
+    <div class="modal-dialog" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3 id="confirm-modal-title" class="modal-title">Confirm Deletion</h3>
+        <button class="modal-close-btn" data-close-modal>&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-modal-message" style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          Are you sure you want to permanently delete this item? This action cannot be undone.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close-modal>Cancel</button>
+        <button type="button" id="confirm-delete-btn" class="btn btn-danger">Confirm Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Admin Application Script -->
+  <script src="/js/admin.js"></script>
+</body>
+</html>
