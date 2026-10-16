@@ -184,14 +184,30 @@ button, input, textarea, select {
   transform: translateY(-1px);
 }
 
+.site-header nav {
+  display: flex;
+  align-items: center;
+}
+
 .mobile-menu-btn {
   display: none;
-  background: transparent;
-  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
   color: var(--text-primary);
-  font-size: 1.5rem;
+  width: 2.6rem;
+  height: 2.6rem;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.mobile-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(56, 189, 248, 0.35);
+  color: var(--accent-cyan);
 }
 
 /* Hero Section */
@@ -1006,12 +1022,43 @@ button, input, textarea, select {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.footer-nav a {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.footer-nav a:hover {
+  color: var(--accent-cyan);
+}
+
+.site-footer p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
 }
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
+  .site-header nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .mobile-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .nav-links {
     display: none;
     position: absolute;
@@ -1019,18 +1066,42 @@ button, input, textarea, select {
     left: 0;
     right: 0;
     flex-direction: column;
-    background: #090d16;
+    background: rgba(9, 13, 22, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-subtle);
-    padding: 1.5rem;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65);
+    padding: 1.5rem 1.75rem 2rem;
     gap: 1.25rem;
+    z-index: 100;
   }
 
   .nav-links.open {
     display: flex;
   }
 
-  .mobile-menu-btn {
+  .nav-links li {
+    width: 100%;
+  }
+
+  .nav-links a {
     display: block;
+    padding: 0.5rem 0;
+    font-size: 1.05rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .nav-links li:last-child a {
+    border-bottom: none;
+  }
+
+  .nav-swagger-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
   }
 
   .hero-section {
@@ -1055,5 +1126,23 @@ button, input, textarea, select {
   .more-projects-cta-btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .site-footer {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .footer-nav {
+    gap: 0.65rem 1.25rem;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+  }
+
+  .footer-nav a {
+    font-size: 0.85rem;
+  }
+
+  .site-footer p {
+    font-size: 0.8rem;
   }
 }
