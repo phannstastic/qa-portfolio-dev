@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="irfanBrandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Squircle with Brand Gradient -->
+  <rect width="64" height="64" rx="15" fill="url(#irfanBrandGrad)" />
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="none" stroke="rgba(255, 255, 255, 0.22)" stroke-width="1.5" />
+
+  <!-- Monogram: i.L -->
+  <g fill="#ffffff">
+    <!-- Letter 'i' Dot -->
+    <circle cx="17" cy="18" r="3.75" />
+    <!-- Letter 'i' Stem -->
+    <rect x="13.25" y="25" width="7.5" height="23" rx="3.75" />
+
+    <!-- Accent Dot '.' -->
+    <circle cx="28" cy="44.25" r="3.75" fill="#38bdf8" stroke="#ffffff" stroke-width="1.2" />
+
+    <!-- Letter 'L' (Stem & Base) -->
+    <path d="M 39 16 C 41.07 16 42.75 17.68 42.75 19.75 L 42.75 40.5 L 48.25 40.5 C 50.32 40.5 52 42.18 52 44.25 C 52 46.32 50.32 48 48.25 48 L 39 48 C 36.93 48 35.25 46.32 35.25 44.25 L 35.25 19.75 C 35.25 17.68 36.93 16 39 16 Z" />
+  </g>
+</svg>

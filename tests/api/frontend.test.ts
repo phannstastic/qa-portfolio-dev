@@ -175,4 +175,55 @@ describe('Public Portfolio Website (Task 7)', () => {
       expect(res.error).toBe('Message must be between 10 and 500 characters');
     });
   });
+
+  // 6. Custom Favicon Assets & HTML Tags
+  describe('Custom Favicon Assets & Browser Compatibility', () => {
+    it('GET /favicon.svg returns 200 OK with valid SVG content matching irfan.Lab brand', async () => {
+      const res = await app.handle(new Request('http://localhost/favicon.svg'));
+      expect(res.status).toBe(200);
+
+      const svg = await res.text();
+      expect(svg).toContain('<svg');
+      expect(svg).toContain('irfanBrandGrad');
+      expect(svg).toContain('#38bdf8');
+      expect(svg).toContain('#6366f1');
+      expect(svg).toContain('#ec4899');
+    });
+
+    it('GET /favicon-32x32.png returns 200 OK with valid PNG binary image', async () => {
+      const res = await app.handle(new Request('http://localhost/favicon-32x32.png'));
+      expect(res.status).toBe(200);
+
+      const buffer = await res.arrayBuffer();
+      expect(buffer.byteLength).toBeGreaterThan(500);
+
+      // Verify PNG magic header bytes: 0x89 0x50 0x4E 0x47 0x0D 0x0A 0x1A 0x0A
+      const bytes = new Uint8Array(buffer);
+      expect(bytes[0]).toBe(0x89);
+      expect(bytes[1]).toBe(0x50); // P
+      expect(bytes[2]).toBe(0x4e); // N
+      expect(bytes[3]).toBe(0x47); // G
+    });
+
+    it('GET /favicon.ico returns 200 OK for standard browser crawler requests', async () => {
+      const res = await app.handle(new Request('http://localhost/favicon.ico'));
+      expect(res.status).toBe(200);
+
+      const buffer = await res.arrayBuffer();
+      expect(buffer.byteLength).toBeGreaterThan(500);
+    });
+
+    it('HTML pages (index, login, admin) contain standard SVG and PNG fallback favicon links', async () => {
+      const pages = ['/', '/login', '/admin'];
+      for (const page of pages) {
+        const res = await app.handle(new Request(`http://localhost${page}`));
+        expect(res.status).toBe(200);
+        const html = await res.text();
+        expect(html).toContain('href="/favicon.svg"');
+        expect(html).toContain('href="/favicon-32x32.png"');
+        expect(html).toContain('rel="apple-touch-icon"');
+      }
+    });
+  });
 });
+
