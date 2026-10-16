@@ -1,8 +1,8 @@
-import { describe, expect, it } from 'bun:test';
-import { getServerConfig } from '../../src/index';
-import { getDbConfig } from '../../src/db/index';
+import { describe, expect, it, afterEach } from 'bun:test';
+import { getServerConfig, createServer } from '../../src/index';
+import { getDbConfig, createDbConnection, getSharedPool, closeDbConnection } from '../../src/db/index';
 
-describe('Deployment Configuration (Silly Development Compatibility)', () => {
+describe('Deployment Configuration (Silly Development & Render Compatibility)', () => {
   describe('Server Port & Host Configuration (getServerConfig)', () => {
     it('prioritizes SERVER_PORT when provided by PaaS/SillyDev environment', () => {
       const env = {
@@ -42,7 +42,7 @@ describe('Deployment Configuration (Silly Development Compatibility)', () => {
   });
 
   describe('Database Connection Pool Configuration (getDbConfig)', () => {
-    it('defaults connectionLimit to 4 for Silly Development MariaDB limit (max 5)', () => {
+    it('defaults connectionLimit to 4 for MariaDB hard limit (max 5)', () => {
       const env = {};
       const config = getDbConfig(env);
       expect(config.connectionLimit).toBe(4);
@@ -55,10 +55,10 @@ describe('Deployment Configuration (Silly Development Compatibility)', () => {
 
     it('respects custom DB_CONNECTION_LIMIT from environment', () => {
       const env = {
-        DB_CONNECTION_LIMIT: '10',
+        DB_CONNECTION_LIMIT: '2',
       };
       const config = getDbConfig(env);
-      expect(config.connectionLimit).toBe(10);
+      expect(config.connectionLimit).toBe(2);
     });
 
     it('correctly maps custom database credentials for production deployment', () => {
@@ -79,4 +79,72 @@ describe('Deployment Configuration (Silly Development Compatibility)', () => {
       expect(config.connectionLimit).toBe(3);
     });
   });
+
+  describe('Singleton Database Connection Pool (Zero Pool Proliferation)', () => {
+    afterEach(async () => {
+      await closeDbConnection();
+    });
+
+    it('returns the exact same singleton database instance on repeated calls without customConfig', () => {
+      const db1 = createDbConnection();
+      const db2 = createDbConnection();
+      expect(db1).toBe(db2);
+      expect(getSharedPool()).not.toBeNull();
+    });
+
+    it('maintains a single underlying MySQL connection pool across multiple invocations', () => {
+      const db1 = createDbConnection();
+      const pool1 = getSharedPool();
+      const db2 = createDbConnection();
+      const pool2 = getSharedPool();
+      const db3 = createDbConnection();
+      const pool3 = getSharedPool();
+
+      expect(pool1).toBe(pool2);
+      expect(pool2).toBe(pool3);
+    });
+
+    it('resets the singleton instance when closeDbConnection is invoked', async () => {
+      const db1 = createDbConnection();
+      const pool1 = getSharedPool();
+      expect(pool1).not.toBeNull();
+
+      await closeDbConnection();
+      expect(getSharedPool()).toBeNull();
+
+      const db2 = createDbConnection();
+      const pool2 = getSharedPool();
+      expect(pool2).not.toBeNull();
+      expect(pool1).not.toBe(pool2);
+    });
+
+    it('creates an isolated dedicated pool when customConfig is provided without overriding singleton', async () => {
+      const defaultDb = createDbConnection();
+      const defaultPool = getSharedPool();
+
+      const customDb = createDbConnection({
+        host: '127.0.0.1',
+        port: 3306,
+        user: 'root',
+        password: '',
+        database: 'isolated_custom_test_db',
+      });
+
+      expect(customDb).not.toBe(defaultDb);
+      // defaultPool must still remain the active shared pool
+      expect(getSharedPool()).toBe(defaultPool);
+      await (customDb as any).$client?.end();
+    });
+
+    it('shares a single database connection instance across routes when createServer is instantiated without options', () => {
+      const app = createServer();
+      const activePool = getSharedPool();
+      expect(activePool).not.toBeNull();
+
+      // Subsequent call to createDbConnection yields the same pool as used by createServer
+      const db = createDbConnection();
+      expect(getSharedPool()).toBe(activePool);
+    });
+  });
 });
+

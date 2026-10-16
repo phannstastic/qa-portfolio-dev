@@ -4,6 +4,7 @@ import { healthRoutes } from './routes/health';
 import { createAuthRoutes, type AuthRouteOptions } from './routes/auth';
 import { createPublicRoutes, type PublicRouteOptions } from './routes/public';
 import { createAdminRoutes, type AdminRouteOptions } from './routes/admin';
+import { createDbConnection, closeDbConnection } from './db';
 
 import { staticPlugin } from '@elysiajs/static';
 
@@ -28,8 +29,11 @@ export interface AppServerOptions
   authDb?: any;
 }
 
-export const createServer = (options?: AppServerOptions) =>
-  new Elysia()
+export const createServer = (options?: AppServerOptions) => {
+  const sharedDb = options?.db || createDbConnection();
+  const authDb = options?.authDb || sharedDb;
+
+  return new Elysia()
     .use(
       swagger({
         path: '/swagger',
@@ -84,15 +88,32 @@ export const createServer = (options?: AppServerOptions) =>
       return Bun.file('public/admin.html');
     })
     .use(healthRoutes)
-    .use(createAuthRoutes({ ...options, db: options?.authDb || options?.db }))
-    .use(createPublicRoutes(options))
-    .use(createAdminRoutes(options));
+    .use(createAuthRoutes({ ...options, db: authDb }))
+    .use(createPublicRoutes({ ...options, db: sharedDb }))
+    .use(createAdminRoutes({ ...options, db: sharedDb }));
+};
 
 export const app = createServer();
 
 if (import.meta.main) {
-  app.listen({ port, hostname }, () => {
+  const server = app.listen({ port, hostname }, () => {
     console.log(`🦊 Elysia server is running at http://${hostname === '0.0.0.0' ? 'localhost' : hostname}:${port}`);
     console.log(`📚 Swagger documentation available at http://${hostname === '0.0.0.0' ? 'localhost' : hostname}:${port}/swagger`);
   });
+
+  const handleShutdown = async (signal: string) => {
+    console.log(`\n🛑 Received ${signal}, closing server and database pool gracefully...`);
+    try {
+      server.stop();
+      await closeDbConnection();
+      console.log('✅ Server and database pool closed cleanly.');
+      process.exit(0);
+    } catch (err: any) {
+      console.error('Error during shutdown:', err?.message || err);
+      process.exit(1);
+    }
+  };
+
+  process.on('SIGINT', () => handleShutdown('SIGINT'));
+  process.on('SIGTERM', () => handleShutdown('SIGTERM'));
 }

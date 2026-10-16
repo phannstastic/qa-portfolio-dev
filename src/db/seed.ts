@@ -1,4 +1,4 @@
-import { createDbConnection, users, projects, experiences } from './index';
+import { createDbConnection, closeDbConnection, users, projects, experiences } from './index';
 import { eq, and } from 'drizzle-orm';
 import dotenv from 'dotenv';
 
@@ -263,8 +263,8 @@ export async function runSeed(customDb?: any): Promise<SeedResult> {
 
     return result;
   } finally {
-    if (!customDb && client?.end) {
-      await client.end();
+    if (!customDb) {
+      await closeDbConnection();
     }
   }
 }
