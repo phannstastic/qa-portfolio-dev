@@ -236,6 +236,7 @@ button, input, textarea, select {
   margin-bottom: 1.25rem;
   background: linear-gradient(180deg, #ffffff 30%, #94a3b8 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
