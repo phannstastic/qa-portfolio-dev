@@ -40,49 +40,52 @@ async function loadProfile() {
     const profile = body.data || {};
     state.profile = profile;
 
-    // Build truth-adhering content
-    const name = escapeHtml(profile.name || 'Muhammad Irfan Trinugroho');
-    const title = escapeHtml(profile.title || 'Quality Assurance Enthusiast');
-    const bio = escapeHtml(profile.bio || 'irfan.Lab \u2022 Quality Assurance Enthusiast');
+    // Build truth-adhering content for Muhammad Irfan Trinugroho
+    const isMockOrAdmin =
+      !profile.name ||
+      profile.name === 'QA Portfolio Admin' ||
+      profile.name === 'QA Portfolio' ||
+      profile.name === 'Admin';
+
+    const rawName = isMockOrAdmin ? 'Muhammad Irfan Trinugroho' : profile.name;
+    const rawTitle = (!profile.title || profile.title === 'QA Engineer')
+      ? 'Quality Assurance Enthusiast'
+      : profile.title;
+    const rawBio = (!profile.bio || profile.bio === 'QA Portfolio and Test Automation Showcase')
+      ? 'Informatics graduate with hands-on QA experience across freelance and internship roles at Noctura Kreasi Sistema, PT Len Industri (Persero), and PT Vortex Buana Edumedia. Skilled in manual functional testing, UAT support, test scenario design, defect tracking, and automation testing using Katalon Studio, Cypress, and Postman.'
+      : profile.bio;
+
+    const name = escapeHtml(rawName);
+    const title = escapeHtml(rawTitle);
+    const bio = escapeHtml(rawBio);
 
     // Only render location if truthy and non-empty
-    let locationHtml = '';
-    if (profile.location && profile.location.trim() !== '') {
-      locationHtml = `
-        <div class="hero-meta-item">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-          <span>${escapeHtml(profile.location)}</span>
-        </div>`;
-    }
+    const rawLocation = profile.location || 'Sleman, Yogyakarta, Indonesia';
+    const locationHtml = `
+      <div class="hero-meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        <span>${escapeHtml(rawLocation)}</span>
+      </div>`;
 
-    // Only render social links if truthy and non-empty
-    let socialLinksHtml = '';
-    const github = profile.socialLinks?.github;
-    const linkedin = profile.socialLinks?.linkedin;
-    const instagram = profile.socialLinks?.instagram;
+    // Social links (ensure all standard links are present)
+    const github = profile.socialLinks?.github || 'https://github.com/phannstastic';
+    const linkedin = profile.socialLinks?.linkedin || 'https://www.linkedin.com/in/muhirfant/';
+    const instagram = profile.socialLinks?.instagram || 'https://www.instagram.com/irfantrinugroho/';
 
-    if (github || linkedin || instagram) {
-      socialLinksHtml = '<div class="hero-social-links" style="display:flex; gap:0.5rem; justify-content:center; margin-top:1rem;">';
-      if (github) {
-        socialLinksHtml += `
-          <a href="${escapeHtml(github)}" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="GitHub Profile">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-          </a>`;
-      }
-      if (linkedin) {
-        socialLinksHtml += `
-          <a href="${escapeHtml(linkedin)}" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="LinkedIn Profile">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-          </a>`;
-      }
-      if (instagram) {
-        socialLinksHtml += `
-          <a href="${escapeHtml(instagram)}" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="Instagram Profile">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-          </a>`;
-      }
-      socialLinksHtml += '</div>';
-    }
+    let socialLinksHtml = '<div class="hero-social-links" style="display:flex; gap:0.5rem; justify-content:center; margin-top:1rem;">';
+    socialLinksHtml += `
+      <a href="${escapeHtml(github)}" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="GitHub Profile">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      </a>`;
+    socialLinksHtml += `
+      <a href="${escapeHtml(linkedin)}" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="LinkedIn Profile">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+      </a>`;
+    socialLinksHtml += `
+      <a href="${escapeHtml(instagram)}" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="Instagram Profile">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+      </a>`;
+    socialLinksHtml += '</div>';
 
     heroEl.innerHTML = `
       <h1 class="hero-title">${name}</h1>
