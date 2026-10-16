@@ -125,9 +125,9 @@ describe('Safe Seed Logic Unit Tests (No Database Touched)', () => {
 
       expect(result.adminSeeded).toBe(true);
       expect(result.adminSkipped).toBe(false);
-      expect(result.projectsSeeded).toBe(3);
+      expect(result.projectsSeeded).toBe(initialProjects.length);
       expect(result.projectsSkipped).toBe(0);
-      expect(result.experiencesSeeded).toBe(3);
+      expect(result.experiencesSeeded).toBe(initialExperiences.length);
       expect(result.experiencesSkipped).toBe(0);
 
       // Verify bcrypt password hashing (never plaintext)
@@ -168,9 +168,9 @@ describe('Safe Seed Logic Unit Tests (No Database Touched)', () => {
       expect(result.adminSeeded).toBe(false);
       expect(result.adminSkipped).toBe(true);
       expect(result.projectsSeeded).toBe(0);
-      expect(result.projectsSkipped).toBe(3);
+      expect(result.projectsSkipped).toBe(initialProjects.length);
       expect(result.experiencesSeeded).toBe(0);
-      expect(result.experiencesSkipped).toBe(3);
+      expect(result.experiencesSkipped).toBe(initialExperiences.length);
       expect(insertCalled).toBe(false); // No insert queries executed!
     });
 

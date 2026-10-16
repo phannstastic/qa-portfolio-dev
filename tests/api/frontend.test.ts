@@ -14,7 +14,7 @@ describe('Public Portfolio Website (Task 7)', () => {
 
     const html = await res.text();
     expect(html).toContain('<!DOCTYPE html>');
-    expect(html).toContain('QA Portfolio &bull; Test Automation Showcase');
+    expect(html).toContain('<title>irfan.Lab</title>');
 
     // Section containers
     expect(html).toContain('id="hero"');
@@ -26,8 +26,25 @@ describe('Public Portfolio Website (Task 7)', () => {
     expect(html).toContain('id="contact-form"');
 
     // Asset links
-    expect(html).toContain('href="/css/style.css"');
-    expect(html).toContain('src="/js/app.js"');
+    expect(html).toContain('href="/css/style.css');
+    expect(html).toContain('src="/js/app.js');
+
+    // Social links in hero include Instagram
+    expect(html).toContain('https://www.instagram.com/irfantrinugroho/');
+
+    // More Projects button with Google Drive link
+    expect(html).toContain('https://drive.google.com/drive/folders/1pmYXm-BRgx7-NTrwBj92_se_tFxjINm6?usp=drive_link');
+    expect(html).toContain('More Projects');
+
+    // Navbar does NOT have OpenAPI Docs button
+    const navMatch = html.match(/<nav>[\s\S]*?<\/nav>/)?.[0] || '';
+    expect(navMatch).not.toContain('OpenAPI Docs');
+    expect(navMatch).toContain('Resume (CV)');
+
+    // Ensure hero badge and old SUT badge are NOT present
+    expect(html).not.toContain('hero-pill-badge');
+    expect(html).not.toContain('Automation Testing &bull; QA Portfolio SUT');
+    expect(html).not.toContain('Automation Testing · QA Portfolio SUT');
   });
 
   // 2. Serving Static CSS (GET /css/style.css)

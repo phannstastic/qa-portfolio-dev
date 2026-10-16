@@ -41,9 +41,9 @@ async function loadProfile() {
     state.profile = profile;
 
     // Build truth-adhering content
-    const name = escapeHtml(profile.name || 'QA Portfolio');
-    const title = escapeHtml(profile.title || 'QA Engineer');
-    const bio = escapeHtml(profile.bio || 'QA Portfolio and Test Automation Showcase');
+    const name = escapeHtml(profile.name || 'Muhammad Irfan Trinugroho');
+    const title = escapeHtml(profile.title || 'Quality Assurance Enthusiast');
+    const bio = escapeHtml(profile.bio || 'irfan.Lab \u2022 Quality Assurance Enthusiast');
 
     // Only render location if truthy and non-empty
     let locationHtml = '';
@@ -59,8 +59,9 @@ async function loadProfile() {
     let socialLinksHtml = '';
     const github = profile.socialLinks?.github;
     const linkedin = profile.socialLinks?.linkedin;
+    const instagram = profile.socialLinks?.instagram;
 
-    if (github || linkedin) {
+    if (github || linkedin || instagram) {
       socialLinksHtml = '<div class="hero-social-links" style="display:flex; gap:0.5rem; justify-content:center; margin-top:1rem;">';
       if (github) {
         socialLinksHtml += `
@@ -74,14 +75,16 @@ async function loadProfile() {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
           </a>`;
       }
+      if (instagram) {
+        socialLinksHtml += `
+          <a href="${escapeHtml(instagram)}" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="Instagram Profile">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>`;
+      }
       socialLinksHtml += '</div>';
     }
 
     heroEl.innerHTML = `
-      <div class="hero-pill-badge">
-        <span class="status-dot"></span>
-        <span>Automation Testing &bull; QA Portfolio SUT</span>
-      </div>
       <h1 class="hero-title">${name}</h1>
       <p class="hero-subtitle">${title}</p>
       <p class="hero-bio">${bio}</p>
@@ -91,6 +94,14 @@ async function loadProfile() {
           <span>Explore Projects</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
         </a>
+        <a href="/docs/cv-muhammad-irfan-trinugroho.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span>Download CV</span>
+        </a>
+        <a href="/docs/portfolio-muhammad-irfan-trinugroho.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          <span>Portfolio PDF</span>
+        </a>
         <a href="#contact" class="btn btn-secondary">Get in Touch</a>
       </div>
       ${socialLinksHtml}
@@ -98,12 +109,23 @@ async function loadProfile() {
   } catch (err) {
     console.error('Failed to load profile:', err);
     heroEl.innerHTML = `
-      <h1 class="hero-title">QA Portfolio</h1>
-      <p class="hero-subtitle">Quality Assurance &amp; Test Automation</p>
-      <p class="hero-bio">Personal QA Portfolio and Test Automation Showcase.</p>
+      <h1 class="hero-title">Muhammad Irfan Trinugroho</h1>
+      <p class="hero-subtitle">Quality Assurance Enthusiast</p>
+      <p class="hero-bio">Informatics graduate with hands-on QA experience across freelance and internship roles at Noctura Kreasi Sistema, PT Len Industri (Persero), and PT Vortex Buana Edumedia.</p>
       <div class="hero-cta-group">
         <a href="#projects" class="btn btn-primary">Explore Projects</a>
         <a href="#contact" class="btn btn-secondary">Contact</a>
+      </div>
+      <div class="hero-social-links" style="display:flex; gap:0.5rem; justify-content:center; margin-top:1rem;">
+        <a href="https://github.com/phannstastic" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="GitHub Profile">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/muhirfant/" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="LinkedIn Profile">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+        </a>
+        <a href="https://www.instagram.com/irfantrinugroho/" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="Instagram Profile">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
       </div>
     `;
   }
@@ -248,7 +270,7 @@ function renderProjects(projects) {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
               </a>` : ''}
             ${p.liveDemoUrl ? `
-              <a href="${escapeHtml(p.liveDemoUrl)}" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="Live Demo">
+              <a href="${escapeHtml(p.liveDemoUrl)}" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="Live Demo or Source Code">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
               </a>` : ''}
           </div>
@@ -298,7 +320,7 @@ async function openProjectModal(slug) {
       <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem; white-space: pre-line;">${escapeHtml(p.description)}</p>
       
       <div style="margin-bottom: 1.75rem;">
-        <h4 style="font-size: 0.95rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.6rem;">Technologies Used</h4>
+        <h4 style="font-size: 0.95rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.6rem;">Technologies &amp; Tools</h4>
         <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
           ${techItems.map(t => `<span class="skill-chip">${escapeHtml(t)}</span>`).join('')}
         </div>
@@ -312,7 +334,7 @@ async function openProjectModal(slug) {
           </a>` : ''}
         ${p.liveDemoUrl ? `
           <a href="${escapeHtml(p.liveDemoUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
-            <span>Live Demonstration</span>
+            <span>Project Repository / Demo</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
           </a>` : ''}
       </div>
@@ -378,6 +400,24 @@ async function loadExperiences() {
               ${exp.location ? `<span>&bull;</span><span>${escapeHtml(exp.location)}</span>` : ''}
             </div>
             <p class="timeline-desc">${escapeHtml(exp.description)}</p>
+            ${exp.company && exp.company.includes('Len Industri') ? `
+              <div style="margin-top: 1rem;">
+                <a href="/docs/certificates/sertifikat-magang-len-industri.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="display:inline-flex; align-items:center; gap:0.4rem;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                  <span>Sertifikat OJT Resmi (Nilai 91.67 / Grade A)</span>
+                </a>
+              </div>` : ''}
+            ${exp.company && exp.company.includes('Vortex') ? `
+              <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <a href="/docs/certificates/sertifikat-magang-vortex-buana-edumedia.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="display:inline-flex; align-items:center; gap:0.4rem;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                  <span>Sertifikat Magang Batch 4</span>
+                </a>
+                <a href="/docs/certificates/surat-pengalaman-magang-vortex.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="display:inline-flex; align-items:center; gap:0.4rem;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                  <span>Surat Keterangan Magang</span>
+                </a>
+              </div>` : ''}
           </article>
         </div>`;
     }

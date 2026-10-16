@@ -7,7 +7,19 @@ import { createAdminRoutes, type AdminRouteOptions } from './routes/admin';
 
 import { staticPlugin } from '@elysiajs/static';
 
-const port = Number(process.env.PORT) || 3000;
+/**
+ * Resolves deployment server configuration from environment variables.
+ * Prioritizes SERVER_PORT (standard in PaaS/Pterodactyl like Silly Development),
+ * falling back to PORT, and finally default 3000.
+ * Binds to 0.0.0.0 by default to ensure public reachability in containerized hosting.
+ */
+export function getServerConfig(env: Record<string, string | undefined> = process.env) {
+  const port = Number(env.SERVER_PORT || env.PORT) || 3000;
+  const hostname = env.HOST || '0.0.0.0';
+  return { port, hostname };
+}
+
+const { port, hostname } = getServerConfig();
 
 export interface AppServerOptions
   extends AuthRouteOptions,
@@ -58,9 +70,19 @@ export const createServer = (options?: AppServerOptions) =>
         prefix: '',
       })
     )
-    .get('/', () => Bun.file('public/index.html'))
-    .get('/login', () => Bun.file('public/login.html'))
-    .get('/admin', () => Bun.file('public/admin.html'))
+    .get('/', ({ set }) => {
+      set.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0';
+      set.headers['Pragma'] = 'no-cache';
+      return Bun.file('public/index.html');
+    })
+    .get('/login', ({ set }) => {
+      set.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0';
+      return Bun.file('public/login.html');
+    })
+    .get('/admin', ({ set }) => {
+      set.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0';
+      return Bun.file('public/admin.html');
+    })
     .use(healthRoutes)
     .use(createAuthRoutes({ ...options, db: options?.authDb || options?.db }))
     .use(createPublicRoutes(options))
@@ -69,8 +91,8 @@ export const createServer = (options?: AppServerOptions) =>
 export const app = createServer();
 
 if (import.meta.main) {
-  app.listen(port, () => {
-    console.log(`🦊 Elysia server is running at http://localhost:${port}`);
-    console.log(`📚 Swagger documentation available at http://localhost:${port}/swagger`);
+  app.listen({ port, hostname }, () => {
+    console.log(`🦊 Elysia server is running at http://${hostname === '0.0.0.0' ? 'localhost' : hostname}:${port}`);
+    console.log(`📚 Swagger documentation available at http://${hostname === '0.0.0.0' ? 'localhost' : hostname}:${port}/swagger`);
   });
 }

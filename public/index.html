@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Personal QA Portfolio and Test Automation Showcase. System Under Test (SUT) for REST APIs, Selenium BDD, and performance testing.">
-  <title>QA Portfolio &bull; Test Automation Showcase</title>
+  <meta name="description"
+    content="Muhammad Irfan Trinugroho - Quality Assurance Enthusiast. Portofolio pengujian otomasi, API testing, UAT, dan manual QA dengan Katalon Studio, Cypress, dan Postman.">
+  <title>irfan.Lab</title>
 
   <!-- Google Fonts: Inter & Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Cache Control -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css?v=2.3">
 </head>
+
 <body>
 
   <!-- Site Header & Navigation -->
   <header class="site-header">
     <div class="container nav-container">
-      <a href="#hero" class="brand-logo" aria-label="QA Portfolio Home">
-        <span class="brand-icon">QA</span>
-        <span>Portfolio</span>
-        <span class="brand-badge">SUT</span>
+      <a href="#hero" class="brand-logo" aria-label="irfan.Lab Home">
+        <span class="brand-icon">iL</span>
+        <span>irfan.Lab</span>
       </a>
 
       <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu">
@@ -37,9 +46,14 @@
           <li><a href="#experiences">Experiences</a></li>
           <li><a href="#contact">Contact</a></li>
           <li>
-            <a href="/swagger" target="_blank" rel="noopener noreferrer" class="nav-swagger-btn">
-              <span>OpenAPI Docs</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <a href="/docs/cv-muhammad-irfan-trinugroho.pdf" target="_blank" rel="noopener noreferrer"
+              class="nav-swagger-btn">
+              <span>Resume (CV)</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
             </a>
           </li>
         </ul>
@@ -54,16 +68,44 @@
       <div class="container">
         <div id="hero-content" class="hero-content">
           <!-- Populated dynamically via GET /api/profile -->
-          <div class="hero-pill-badge">
-            <span class="status-dot"></span>
-            <span>Automation Testing &bull; QA Portfolio SUT</span>
-          </div>
-          <h1 class="hero-title">QA Portfolio</h1>
-          <p class="hero-subtitle">QA Engineer</p>
-          <p class="hero-bio">QA Portfolio and Test Automation Showcase.</p>
+          <h1 class="hero-title">Muhammad Irfan Trinugroho</h1>
+          <p class="hero-subtitle">Quality Assurance Enthusiast</p>
+          <p class="hero-bio">Informatics graduate with hands-on QA experience across freelance and internship roles at
+            Noctura Kreasi Sistema, PT Len Industri (Persero), and PT Vortex Buana Edumedia. Skilled in manual
+            functional testing, UAT support, test scenario design, defect tracking, and automation testing using Katalon
+            Studio, Cypress, and Postman.</p>
           <div class="hero-cta-group">
             <a href="#projects" class="btn btn-primary">Explore Projects</a>
+            <a href="/docs/cv-muhammad-irfan-trinugroho.pdf" target="_blank" rel="noopener noreferrer"
+              class="btn btn-secondary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              <span>Download CV</span>
+            </a>
+            <a href="/docs/portfolio-muhammad-irfan-trinugroho.pdf" target="_blank" rel="noopener noreferrer"
+              class="btn btn-secondary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span>Portfolio PDF</span>
+            </a>
             <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+          </div>
+          <div class="hero-social-links" style="display:flex; gap:0.5rem; justify-content:center; margin-top:1rem;">
+            <a href="https://github.com/phannstastic" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="GitHub Profile">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/muhirfant/" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="LinkedIn Profile">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+            <a href="https://www.instagram.com/irfantrinugroho/" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="Instagram Profile">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
           </div>
         </div>
       </div>
@@ -75,7 +117,8 @@
         <header class="section-header">
           <span class="section-tag">Competencies</span>
           <h2 class="section-title">Technical Skills</h2>
-          <p class="section-desc">Test automation tools, frameworks, and technologies utilized across portfolio projects.</p>
+          <p class="section-desc">Test automation tools, frameworks, and technologies utilized across portfolio
+            projects.</p>
         </header>
 
         <div id="skills-container" class="skills-grid">
@@ -93,21 +136,26 @@
         <header class="section-header">
           <span class="section-tag">Showcase</span>
           <h2 class="section-title">Portfolio Projects</h2>
-          <p class="section-desc">Automated testing suites, performance benchmarks, and quality assurance frameworks.</p>
+          <p class="section-desc">Automated testing suites, performance benchmarks, and quality assurance frameworks.
+          </p>
         </header>
 
         <!-- Search & Filter Controls -->
         <div class="projects-controls">
           <div class="search-input-wrap">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" id="project-search" class="search-input" placeholder="Search by title, description, or technology...">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="project-search" class="search-input"
+              placeholder="Search by title, description, or technology...">
           </div>
 
           <div class="filter-bar">
             <button class="filter-pill active" data-category="all">All Projects</button>
-            <button class="filter-pill" data-category="API Testing">API Testing</button>
             <button class="filter-pill" data-category="Automation Testing">Automation Testing</button>
-            <button class="filter-pill" data-category="Performance Testing">Performance Testing</button>
+            <button class="filter-pill" data-category="API Testing">API Testing</button>
+            <button class="filter-pill" data-category="Manual Testing">Manual Testing</button>
           </div>
 
           <div class="featured-toggle-wrap">
@@ -125,11 +173,41 @@
           <div class="skeleton" style="height: 280px; border-radius: var(--radius-lg);"></div>
           <div class="skeleton" style="height: 280px; border-radius: var(--radius-lg);"></div>
         </div>
+
+        <!-- More Projects Showcase Card (Google Drive Archive) -->
+        <div class="more-projects-card">
+          <div class="more-projects-content">
+            <div class="more-projects-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span>Repository &amp; Document Archive</span>
+            </div>
+            <h3 class="more-projects-heading">Explore More QA Projects &amp; Artifacts</h3>
+            <p class="more-projects-subtext">
+              Looking for more test automation suites, Cypress frameworks, Katalon test cases, Postman collections, and detailed testing reports? Browse the complete archive on Google Drive.
+            </p>
+          </div>
+          <div class="more-projects-action">
+            <a href="https://drive.google.com/drive/folders/1pmYXm-BRgx7-NTrwBj92_se_tFxjINm6?usp=drive_link" target="_blank" rel="noopener noreferrer" class="btn btn-primary more-projects-cta-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span>More Projects on Drive</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- 4. Project Detail Modal Dialog -->
-    <div id="project-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-project-title">
+    <div id="project-modal" class="modal-backdrop" role="dialog" aria-modal="true"
+      aria-labelledby="modal-project-title">
       <div class="modal-dialog">
         <button id="modal-close-btn" class="modal-close-btn" aria-label="Close dialog">&times;</button>
         <div id="modal-body">
@@ -161,7 +239,8 @@
         <header class="section-header">
           <span class="section-tag">Get in Touch</span>
           <h2 class="section-title">Send a Message</h2>
-          <p class="section-desc">Have a question or looking to collaborate on QA automation? Send an inquiry message below.</p>
+          <p class="section-desc">Have a question or looking to collaborate on QA automation? Send an inquiry message
+            below.</p>
         </header>
 
         <div class="contact-wrap">
@@ -174,21 +253,25 @@
                 <label for="contact-name" class="form-label">
                   Your Full Name <span class="req">*</span>
                 </label>
-                <input type="text" id="contact-name" class="form-input" placeholder="e.g. Jane Doe" required maxlength="100">
+                <input type="text" id="contact-name" class="form-input" placeholder="e.g. Jane Doe" required
+                  maxlength="100">
               </div>
 
               <div class="form-group">
                 <label for="contact-email" class="form-label">
                   Your Email Address <span class="req">*</span>
                 </label>
-                <input type="email" id="contact-email" class="form-input" placeholder="name@example.com" required maxlength="191">
+                <input type="email" id="contact-email" class="form-input" placeholder="name@example.com" required
+                  maxlength="191">
               </div>
 
               <div class="form-group">
                 <label for="contact-message" class="form-label">
                   Your Message <span class="req">*</span>
                 </label>
-                <textarea id="contact-message" class="form-textarea" placeholder="Describe your inquiry or testing requirements (10 to 500 characters)..." required minlength="10" maxlength="500"></textarea>
+                <textarea id="contact-message" class="form-textarea"
+                  placeholder="Describe your inquiry or testing requirements (10 to 500 characters)..." required
+                  minlength="10" maxlength="500"></textarea>
                 <div class="char-counter-row">
                   <span id="char-counter">0 / 500 characters (minimum 10)</span>
                   <span>Required</span>
@@ -216,11 +299,12 @@
         <a href="#contact">Contact</a>
         <a href="/swagger" target="_blank" rel="noopener noreferrer">Swagger API</a>
       </nav>
-      <p>&copy; 2026 QA Portfolio CMS &bull; System Under Test (SUT) for Automated Testing Suites.</p>
+      <p>&copy; 2026 irfan.Lab &bull; Quality Assurance Enthusiast</p>
     </div>
   </footer>
 
   <!-- Application Script -->
-  <script src="/js/app.js"></script>
+  <script src="/js/app.js?v=2.3"></script>
 </body>
+
 </html>

@@ -19,7 +19,7 @@ describe('Admin Dashboard & Authentication (Task 8)', () => {
 
       const html = await res.text();
       expect(html).toContain('<!DOCTYPE html>');
-      expect(html).toContain('Admin Login &bull; QA Portfolio CMS');
+      expect(html).toContain('Admin Login &bull; irfan.Lab');
       expect(html).toContain('id="login-form"');
       expect(html).toContain('id="login-email"');
       expect(html).toContain('id="login-password"');
@@ -38,7 +38,7 @@ describe('Admin Dashboard & Authentication (Task 8)', () => {
 
       const html = await res.text();
       expect(html).toContain('<!DOCTYPE html>');
-      expect(html).toContain('Admin Dashboard &bull; QA Portfolio CMS');
+      expect(html).toContain('Admin Dashboard &bull; irfan.Lab');
 
       // Sidebar & Navigation
       expect(html).toContain('id="admin-sidebar"');
