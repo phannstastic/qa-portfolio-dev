@@ -319,10 +319,42 @@ describe('Security & Regression Test Suite (Task 9)', () => {
   // ==========================================================================
   describe('Information Leakage Prevention', () => {
     it('SEC-LEAK-01: Login failure produces uniform error without revealing whether email or password was wrong', async () => {
-      const app = createServer();
+      const mockHashedPassword = await Bun.password.hash('CorrectAdminPassword123!', {
+        algorithm: 'bcrypt',
+        cost: 10,
+      });
 
-      // Wrong email
-      const res1 = await app.handle(
+      const mockDbWithUser = {
+        select: () => ({
+          from: () => ({
+            where: () => ({
+              limit: async () => [
+                {
+                  id: 1,
+                  name: 'Muhammad Irfan Trinugroho',
+                  email: 'admin@qa-portfolio.local',
+                  passwordHash: mockHashedPassword,
+                  role: 'superadmin',
+                },
+              ],
+            }),
+          }),
+        }),
+      };
+
+      const mockDbNoUser = {
+        select: () => ({
+          from: () => ({
+            where: () => ({
+              limit: async () => [],
+            }),
+          }),
+        }),
+      };
+
+      // Wrong email (user does not exist in DB)
+      const app1 = createServer({ db: mockDbNoUser as any, jwtSecret });
+      const res1 = await app1.handle(
         new Request('http://localhost/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -332,8 +364,9 @@ describe('Security & Regression Test Suite (Task 9)', () => {
       expect(res1.status).toBe(401);
       const json1 = (await res1.json()) as any;
 
-      // Wrong password
-      const res2 = await app.handle(
+      // Wrong password (user exists in DB, but password does not match)
+      const app2 = createServer({ db: mockDbWithUser as any, jwtSecret });
+      const res2 = await app2.handle(
         new Request('http://localhost/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

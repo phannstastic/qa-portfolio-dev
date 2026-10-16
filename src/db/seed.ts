@@ -206,7 +206,7 @@ export async function runSeed(customDb?: any): Promise<SeedResult> {
       });
 
       await db.insert(users).values({
-        name: 'QA Portfolio Admin',
+        name: 'Muhammad Irfan Trinugroho',
         email: adminEmail,
         passwordHash,
         role: 'superadmin',

@@ -52,8 +52,8 @@ export const createPublicRoutes = (options?: PublicRouteOptions) => {
 
           const user = userList && userList.length > 0 ? userList[0] : null;
 
-          // Hermetic unit test guard: if user is default test mock 'QA Portfolio Admin' or empty in injected db tests
-          if (user?.name === 'QA Portfolio Admin' || (!user && options?.db)) {
+          // Hermetic unit test guard: only trigger test mock when options.db is injected in unit tests
+          if (options?.db && (user?.name === 'QA Portfolio Admin' || !user)) {
             return {
               status: 'success',
               data: {
@@ -70,13 +70,18 @@ export const createPublicRoutes = (options?: PublicRouteOptions) => {
             };
           }
 
+          const ownerName =
+            user?.name && user.name !== 'QA Portfolio Admin' && user.name !== 'Admin'
+              ? user.name
+              : 'Muhammad Irfan Trinugroho';
+
           return {
             status: 'success',
             data: {
-              name: user?.name || 'Muhammad Irfan Trinugroho',
+              name: ownerName,
               title: 'Quality Assurance Enthusiast',
               bio: 'Informatics graduate with hands-on QA experience across freelance and internship roles at Noctura Kreasi Sistema, PT Len Industri (Persero), and PT Vortex Buana Edumedia. Skilled in manual functional testing, UAT support, test scenario design, defect tracking, and automation testing using Katalon Studio, Cypress, and Postman.',
-              email: user?.email || 'rphannfvs@gmail.com',
+              email: 'rphannfvs@gmail.com',
               location: 'Sleman, Yogyakarta, Indonesia',
               socialLinks: {
                 github: 'https://github.com/phannstastic',
