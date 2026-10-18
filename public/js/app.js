@@ -283,6 +283,12 @@ function renderProjects(projects) {
 
   container.innerHTML = html;
 
+  // Reset horizontal slider position on fresh render
+  container.scrollLeft = 0;
+  if (typeof container._updateSliderButtons === 'function') {
+    setTimeout(container._updateSliderButtons, 60);
+  }
+
   // Attach click listeners to view detail buttons
   container.querySelectorAll('.view-detail-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -592,6 +598,91 @@ function setupInteractiveControls() {
       });
     });
   }
+
+  // Horizontal Projects Slider controls & dragging
+  setupProjectSlider();
+}
+
+/**
+ * Sets up horizontal slider buttons, keyboard, and mouse drag navigation for projects
+ */
+function setupProjectSlider() {
+  const slider = document.getElementById('projects-container');
+  if (!slider) return;
+
+  const prevBtns = document.querySelectorAll('.slider-prev-btn');
+  const nextBtns = document.querySelectorAll('.slider-next-btn');
+
+  const getScrollAmount = () => {
+    const card = slider.querySelector('.project-card');
+    return card ? card.offsetWidth + 28 : 388;
+  };
+
+  const updateButtonsState = () => {
+    const atStart = slider.scrollLeft <= 5;
+    const atEnd = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 8;
+    prevBtns.forEach(btn => {
+      btn.disabled = atStart;
+    });
+    nextBtns.forEach(btn => {
+      btn.disabled = atEnd;
+    });
+  };
+
+  prevBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      slider.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+    });
+  });
+
+  nextBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      slider.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+    });
+  });
+
+  slider.addEventListener('scroll', updateButtonsState, { passive: true });
+  window.addEventListener('resize', updateButtonsState, { passive: true });
+
+  slider._updateSliderButtons = updateButtonsState;
+  updateButtonsState();
+
+  // Mouse drag-to-scroll interaction
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  slider.addEventListener('mousedown', (e) => {
+    if (e.button !== 0 || e.target.closest('button, a, input, select, textarea')) return;
+    isDown = true;
+    slider.classList.add('is-dragging');
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (isDown) {
+      isDown = false;
+      slider.classList.remove('is-dragging');
+    }
+  });
+
+  slider.addEventListener('mouseleave', () => {
+    if (isDown) {
+      isDown = false;
+      slider.classList.remove('is-dragging');
+    }
+  });
+
+  slider.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    slider.scrollLeft = scrollLeft - walk;
+  });
 }
 
 // Bootstrap upon DOM loaded

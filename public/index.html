@@ -26,7 +26,7 @@
   <meta http-equiv="Expires" content="0">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="/css/style.css?v=2.4">
+  <link rel="stylesheet" href="/css/style.css?v=2.5">
 </head>
 
 <body>
@@ -175,12 +175,49 @@
           </div>
         </div>
 
-        <!-- Projects Cards Grid -->
-        <div id="projects-container" class="projects-grid">
-          <!-- Populated dynamically via GET /api/projects -->
-          <div class="skeleton" style="height: 280px; border-radius: var(--radius-lg);"></div>
-          <div class="skeleton" style="height: 280px; border-radius: var(--radius-lg);"></div>
-          <div class="skeleton" style="height: 280px; border-radius: var(--radius-lg);"></div>
+        <!-- Projects Cards Horizontal Slider -->
+        <div class="projects-slider-wrapper">
+          <button id="slider-prev-btn" class="slider-arrow slider-arrow-prev slider-prev-btn" aria-label="Previous Projects" title="Previous Projects">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <div id="projects-container" class="projects-grid projects-slider">
+            <!-- Populated dynamically via GET /api/projects -->
+            <div class="skeleton" style="height: 380px; flex: 0 0 350px; border-radius: var(--radius-lg);"></div>
+            <div class="skeleton" style="height: 380px; flex: 0 0 350px; border-radius: var(--radius-lg);"></div>
+            <div class="skeleton" style="height: 380px; flex: 0 0 350px; border-radius: var(--radius-lg);"></div>
+          </div>
+
+          <button id="slider-next-btn" class="slider-arrow slider-arrow-next slider-next-btn" aria-label="Next Projects" title="Next Projects">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Slider Controls Footer (Hint & Navigation Buttons) -->
+        <div class="projects-slider-footer">
+          <div class="slider-hint">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            <span>Slide horizontally or use buttons to explore projects</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+          <div class="slider-pagination-buttons">
+            <button class="slider-nav-pill slider-prev-btn" aria-label="Previous projects">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              <span>Prev</span>
+            </button>
+            <button class="slider-nav-pill slider-next-btn" aria-label="Next projects">
+              <span>Next</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
         </div>
 
         <!-- More Projects Showcase Card (Google Drive Archive) -->
@@ -313,7 +350,7 @@
   </footer>
 
   <!-- Application Script -->
-  <script src="/js/app.js?v=2.5"></script>
+  <script src="/js/app.js?v=2.6"></script>
 </body>
 
 </html>
